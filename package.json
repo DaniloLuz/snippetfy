@@ -1,0 +1,31 @@
+{
+  "name": "snippetfy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaniloLuz/snippetfy.git"
+  },
+  "keywords": [
+    "snippetfy"
+  ],
+  "author": "Danilo Luz <danilo-2108@hotmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaniloLuz/snippetfy/issues"
+  },
+  "homepage": "https://github.com/DaniloLuz/snippetfy#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  }
+}
