@@ -1,7 +1,8 @@
 /*!
- * snippetfy
+ * Snippetfy
+ *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * MIT Licensed
+ * version 0.1.0
  */
 
 /**
@@ -16,6 +17,14 @@ const path = require('path');
  * Definindo Express
  */
 const app = express();
+
+const { User } = require('./app/models');
+
+User.create({
+  name: 'Danilo',
+  email: 'danilo-2108@hotmail.com',
+  password: '123456',
+});
 
 /**
  * Configurando template engine nunjucks definindo o diretorio das views
