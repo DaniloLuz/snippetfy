@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.1.0
+ * version 0.5.0
  */
 
 /**
@@ -18,6 +18,11 @@ const routes = require('./app/routes');
  * Definindo Express
  */
 const app = express();
+
+/**
+ * Defindo para o express o caminho da pasta public
+ */
+app.use(express.static(path.resolve('app', 'public')));
 
 /**
  * Configurando template engine nunjucks definindo o diretorio das views
@@ -37,7 +42,9 @@ app.set('view engine', 'njk');
  */
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Passando as rotas que serão utilizadas no projeto
+/**
+ * Passando as rotas que serão utilizadas no projeto
+ */
 app.use('/', routes);
 
 /**
