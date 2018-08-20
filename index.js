@@ -12,19 +12,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const routes = require('./app/routes');
 
 /**
  * Definindo Express
  */
 const app = express();
-
-const { User } = require('./app/models');
-
-User.create({
-  name: 'Danilo',
-  email: 'danilo-2108@hotmail.com',
-  password: '123456',
-});
 
 /**
  * Configurando template engine nunjucks definindo o diretorio das views
@@ -44,12 +37,8 @@ app.set('view engine', 'njk');
  */
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/**
- * Rota de teste
- */
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// Passando as rotas que serão utilizadas no projeto
+app.use('/', routes);
 
 /**
  * Iniciando aplicação na porta 3000
