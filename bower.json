@@ -1,0 +1,24 @@
+{
+  "name": "snippetfy",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Danilo Luz <danilo-2108@hotmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "snippetfy"
+  ],
+  "homepage": "https://github.com/DaniloLuz/snippetfy",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
