@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.5.0
+ * version 0.6.0
  */
 
 /**
@@ -12,7 +12,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const flash = require('connect-flash');
+const session = require('express-session');
+
 const routes = require('./app/routes');
+const sessionConfig = require('./config/session');
 
 /**
  * Definindo Express
@@ -41,6 +45,16 @@ app.set('view engine', 'njk');
  * Configuração do body parser
  */
 app.use(bodyParser.urlencoded({ extended: false }));
+
+/**
+ * Configurando session
+ */
+app.use(session(sessionConfig));
+
+/**
+ * Adicionado Flash Messages
+ */
+app.use(flash());
 
 /**
  * Passando as rotas que serão utilizadas no projeto
