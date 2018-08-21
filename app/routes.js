@@ -11,6 +11,14 @@ const routes = express.Router();
 const authController = require('./controllers/authController');
 
 /**
+ * Middleware de mensagens flash
+ */
+routes.use((req, res, next) => {
+  res.locals.flashSuccess = req.flash('success');
+  res.locals.flashError = req.flash('error');
+  next();
+});
+/**
  * Rota /
  */
 routes.get('/', authController.signin);
