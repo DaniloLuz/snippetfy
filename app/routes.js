@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.5.0
+ * version 0.6.0
  */
 const express = require('express');
 
@@ -32,8 +32,11 @@ routes.use('/app', authMiddleware);
  */
 routes.get('/', authController.signin);
 routes.get('/signup', authController.signup);
+routes.get('/signout', authController.signout);
+
 routes.post('/register', authController.register);
 routes.post('/authenticate', authController.authenticate);
+
 routes.get('/app/dashboard', dashboardController.index);
 
 module.exports = routes;
