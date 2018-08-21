@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.3.1
+ * version 0.4.0
  */
 const express = require('express');
 
@@ -24,5 +24,6 @@ routes.use((req, res, next) => {
 routes.get('/', authController.signin);
 routes.get('/signup', authController.signup);
 routes.post('/register', authController.register);
+routes.post('/authenticate', authController.authenticate);
 
 module.exports = routes;
