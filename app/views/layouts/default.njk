@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/dracula.css">
 
     <!-- Importando Jquery -->
-    <script src="../bower_components/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Importacao dos arquivos do SimpleMDE-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
@@ -16,6 +16,8 @@
     <script href="/main.js"></script>
   </head>
   <body>
+    {% include 'partials/flash.njk' %}
+
     {% block body %} {% endblock %}
   </body>
 </html>

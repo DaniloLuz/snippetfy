@@ -36,6 +36,7 @@ module.exports = {
 
     // Verifica se já existe um usuário com este registro
     if (await User.findOne({ where: { email } })) {
+      req.flash('error', 'E-mail já cadastrado');
       // Volta para a rota que estava antes de chegar neste método
       return res.redirect('back');
     }
@@ -46,6 +47,7 @@ module.exports = {
     // Passa as informações digitadas no formulário para criar novo registro
     await User.create({ ...req.body, password });
 
+    req.flash('success', 'Usuário cadastrado com sucesso');
     // Faz redirect
     return res.redirect('/');
   },
