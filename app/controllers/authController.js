@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.4.0
+ * version 0.5.0
  */
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
@@ -50,5 +50,40 @@ module.exports = {
     req.flash('success', 'Usuário cadastrado com sucesso');
     // Faz redirect
     return res.redirect('/');
+  },
+
+  /**
+   * Método para realizar a autenticação na plataforma
+   * @param {Request} req
+   * @param {Reponse} res
+   */
+  async authenticate(req, res) {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+
+    /**
+     * Verifica se existe algum usuário com o e-mail digitado
+     */
+    if (!user) {
+      req.flash('error', 'Usuário inexistente');
+      return res.redirect('bacl');
+    }
+
+    /**
+     * Verifica se a senha escrita bate com a salva no banco
+     */
+    if (!await bcrypt.compare(password, user.password)) {
+      req.flash('error', 'Senha incorreta');
+      return res.redirect('back');
+    }
+
+    /**
+     * Salva o usuário na sessão
+     */
+    req.session.user = user;
+    return req.session.save(() => {
+      res.redirect('app/dashboard');
+    });
   },
 };
