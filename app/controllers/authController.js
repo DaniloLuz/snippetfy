@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.5.0
+ * version 0.6.0
  */
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
@@ -84,6 +84,17 @@ module.exports = {
     req.session.user = user;
     return req.session.save(() => {
       res.redirect('app/dashboard');
+    });
+  },
+
+  /**
+   * Faz logout na plataforma
+   * @param {Request} req
+   * @param {Reponse} res
+   */
+  signout(req, res) {
+    return req.session.destroy(() => {
+      res.redirect('/');
     });
   },
 };
