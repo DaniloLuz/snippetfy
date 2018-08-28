@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.6.0
+ * version 0.6.1
  */
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
@@ -67,7 +67,7 @@ module.exports = {
      */
     if (!user) {
       req.flash('error', 'Usuário inexistente');
-      return res.redirect('bacl');
+      return res.redirect('back');
     }
 
     /**
