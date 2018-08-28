@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.6.1
+ * version 0.7.0
  */
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
@@ -31,25 +31,29 @@ module.exports = {
    * @param {Request} req
    * @param {Reponse} res
    */
-  async register(req, res) {
-    const { email } = req.body;
+  async register(req, res, next) {
+    try {
+      const { email } = req.body;
 
-    // Verifica se já existe um usuário com este registro
-    if (await User.findOne({ where: { email } })) {
-      req.flash('error', 'E-mail já cadastrado');
-      // Volta para a rota que estava antes de chegar neste método
-      return res.redirect('back');
+      // Verifica se já existe um usuário com este registro
+      if (await User.findOne({ where: { email } })) {
+        req.flash('error', 'E-mail já cadastrado');
+        // Volta para a rota que estava antes de chegar neste método
+        return res.redirect('back');
+      }
+
+      // Fazendo criptografia da senha digitada
+      const password = await bcrypt.hash(req.body.password, 5);
+
+      // Passa as informações digitadas no formulário para criar novo registro
+      await User.create({ ...req.body, password });
+
+      req.flash('success', 'Usuário cadastrado com sucesso');
+      // Faz redirect
+      return res.redirect('/');
+    } catch (err) {
+      return next(err);
     }
-
-    // Fazendo criptografia da senha digitada
-    const password = await bcrypt.hash(req.body.password, 5);
-
-    // Passa as informações digitadas no formulário para criar novo registro
-    await User.create({ ...req.body, password });
-
-    req.flash('success', 'Usuário cadastrado com sucesso');
-    // Faz redirect
-    return res.redirect('/');
   },
 
   /**
@@ -57,34 +61,38 @@ module.exports = {
    * @param {Request} req
    * @param {Reponse} res
    */
-  async authenticate(req, res) {
-    const { email, password } = req.body;
+  async authenticate(req, res, next) {
+    try {
+      const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+      const user = await User.finddOne({ where: { email } });
 
-    /**
-     * Verifica se existe algum usuário com o e-mail digitado
-     */
-    if (!user) {
-      req.flash('error', 'Usuário inexistente');
-      return res.redirect('back');
+      /**
+       * Verifica se existe algum usuário com o e-mail digitado
+       */
+      if (!user) {
+        req.flash('error', 'Usuário inexistente');
+        return res.redirect('back');
+      }
+
+      /**
+       * Verifica se a senha escrita bate com a salva no banco
+       */
+      if (!await bcrypt.compare(password, user.password)) {
+        req.flash('error', 'Senha incorreta');
+        return res.redirect('back');
+      }
+
+      /**
+       * Salva o usuário na sessão
+       */
+      req.session.user = user;
+      return req.session.save(() => {
+        res.redirect('app/dashboard');
+      });
+    } catch (err) {
+      return next(err);
     }
-
-    /**
-     * Verifica se a senha escrita bate com a salva no banco
-     */
-    if (!await bcrypt.compare(password, user.password)) {
-      req.flash('error', 'Senha incorreta');
-      return res.redirect('back');
-    }
-
-    /**
-     * Salva o usuário na sessão
-     */
-    req.session.user = user;
-    return req.session.save(() => {
-      res.redirect('app/dashboard');
-    });
   },
 
   /**
