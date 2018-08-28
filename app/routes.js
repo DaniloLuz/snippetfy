@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.6.0
+ * version 0.7.0
  */
 const express = require('express');
 
@@ -11,6 +11,7 @@ const routes = express.Router();
 const authController = require('./controllers/authController');
 const dashboardController = require('./controllers/dashboardController');
 const authMiddleware = require('./middlewares/auth');
+const guestMiddleware = require('./middlewares/guest');
 
 /**
  * Middleware de mensagens flash
@@ -30,8 +31,8 @@ routes.use('/app', authMiddleware);
 /**
  * Rota /
  */
-routes.get('/', authController.signin);
-routes.get('/signup', authController.signup);
+routes.get('/', guestMiddleware, authController.signin);
+routes.get('/signup', guestMiddleware, authController.signup);
 routes.get('/signout', authController.signout);
 
 routes.post('/register', authController.register);
