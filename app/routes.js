@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.7.0
+ * version 0.8.0
  */
 const express = require('express');
 
@@ -39,5 +39,19 @@ routes.post('/register', authController.register);
 routes.post('/authenticate', authController.authenticate);
 
 routes.get('/app/dashboard', dashboardController.index);
+
+/**
+ * Middleware Handle Error
+ */
+routes.use((err, req, res, _next) => {
+  // Retorna status do http caso contrário retorna erro 500
+  res.status(err.status || 500);
+
+  // Retorna o erro para a página de erro
+  return res.render('errors/index', {
+    message: err.message,
+    error: err,
+  });
+});
 
 module.exports = routes;
