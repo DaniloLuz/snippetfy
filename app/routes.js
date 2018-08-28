@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.9.0
+ * version 0.10.0
  */
 const express = require('express');
 
@@ -40,6 +40,11 @@ routes.post('/authenticate', authController.authenticate);
 
 routes.get('/app/dashboard', dashboardController.index);
 
+// Caso não encontre nenhuma das rotas acima, é enviado para página 404
+routes.use((req, res) => {
+  res.render('errors/404');
+});
+
 /**
  * Middleware Handle Error
  */
@@ -53,5 +58,7 @@ routes.use((err, req, res, _next) => {
     error: process.env.NODE_ENV === 'production' ? {} : err,
   });
 });
+
+
 
 module.exports = routes;
