@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.8.0
+ * version 0.9.0
  */
 const express = require('express');
 
@@ -50,7 +50,7 @@ routes.use((err, req, res, _next) => {
   // Retorna o erro para a página de erro
   return res.render('errors/index', {
     message: err.message,
-    error: err,
+    error: process.env.NODE_ENV === 'production' ? {} : err,
   });
 });
 
