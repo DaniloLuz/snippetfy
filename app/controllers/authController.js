@@ -2,7 +2,7 @@
  * Snippetfy
  *
  * Copyright(c) 2018 Danilo Luz <danilo-2108@hotmail.com>
- * version 0.7.0
+ * version 0.7.1
  */
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
@@ -65,7 +65,7 @@ module.exports = {
     try {
       const { email, password } = req.body;
 
-      const user = await User.finddOne({ where: { email } });
+      const user = await User.findOne({ where: { email } });
 
       /**
        * Verifica se existe algum usuário com o e-mail digitado
